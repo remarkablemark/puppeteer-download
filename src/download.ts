@@ -1,4 +1,4 @@
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
 import puppeteer from 'puppeteer';
 import url from 'url';
@@ -44,6 +44,13 @@ const filepath = path.resolve(__dirname, '..', 'downloads', filename);
     request.continue();
   });
 
+  const writableStream = fs.createWriteStream(filepath);
+  writableStream.on('error', (error) => {
+    console.error(
+      `An error occured while writing to the file. Error: ${error.message}`
+    );
+  });
+
   let lastResponseTime = Date.now();
 
   page.on('response', async (response) => {
@@ -51,7 +58,7 @@ const filepath = path.resolve(__dirname, '..', 'downloads', filename);
       if (response.url().includes(downloadUrl)) {
         lastResponseTime = Date.now();
         const buffer = await response.buffer();
-        await fs.writeFile(filepath, buffer);
+        writableStream.write(buffer);
       }
     } catch (error) {
       console.error(error);
@@ -62,6 +69,7 @@ const filepath = path.resolve(__dirname, '..', 'downloads', filename);
 
   setInterval(() => {
     if (Date.now() - lastResponseTime > DOWNLOAD_TIMEOUT_MILLISECONDS) {
+      writableStream.close();
       browser.close();
       process.exit();
     }
