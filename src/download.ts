@@ -47,10 +47,14 @@ const filepath = path.resolve(__dirname, '..', 'downloads', filename);
   let lastResponseTime = Date.now();
 
   page.on('response', async (response) => {
-    if (response.url().includes(downloadUrl)) {
-      lastResponseTime = Date.now();
-      const buffer = await response.buffer();
-      await fs.writeFile(filepath, buffer);
+    try {
+      if (response.url().includes(downloadUrl)) {
+        lastResponseTime = Date.now();
+        const buffer = await response.buffer();
+        await fs.writeFile(filepath, buffer);
+      }
+    } catch (error) {
+      console.error(error);
     }
   });
 
