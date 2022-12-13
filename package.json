@@ -6,7 +6,8 @@
   "main": "index.ts",
   "scripts": {
     "start": "ts-node index.ts",
-    "clean": "rm downloads/*"
+    "clean": "rm downloads/*",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "puppeteer": "^19.4.0",
