@@ -2,11 +2,13 @@ import fs from 'fs/promises';
 import path from 'path';
 import puppeteer from 'puppeteer';
 import url from 'url';
-import progress from './progress'
+import progress from './progress';
+import { envToBoolean } from './utils';
 
 progress();
 
-const DOWNLOAD_TIMEOUT_MILLISECONDS = 30000; // 30 seconds
+const DOWNLOAD_TIMEOUT_MILLISECONDS =
+  Number(process.env.DOWNLOAD_TIMEOUT_MILLISECONDS) || 30000; // 30 seconds
 
 const [downloadUrl] = process.argv.slice(2);
 if (!downloadUrl) {
@@ -21,9 +23,15 @@ if (!filename) {
 const filepath = path.resolve(__dirname, '..', 'downloads', filename);
 
 (async () => {
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch({
+    headless: envToBoolean(process.env.HEADLESS),
+  });
   const [page] = await browser.pages();
   await page.setRequestInterception(true);
+
+  if (process.env.USER_AGENT) {
+    await page.setUserAgent(process.env.USER_AGENT);
+  }
 
   let initialRequest = true;
 
