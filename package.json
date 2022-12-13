@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-download",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0",
   "description": "Puppetter download",
   "author": "Mark <mark@remarkablemark.org>",
   "main": "index.ts",
