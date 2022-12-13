@@ -3,6 +3,11 @@
   "version": "1.0.0-alpha",
   "description": "Puppetter download",
   "author": "Mark <mark@remarkablemark.org>",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "clean": "rm downloads/*"
+  },
   "dependencies": {
     "puppeteer": "^19.4.0",
     "ts-node": "^10.9.1",
