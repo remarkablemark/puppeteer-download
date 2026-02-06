@@ -10,7 +10,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "dotenv": "^17.2.3",
+    "dotenv": "^17.2.4",
     "puppeteer": "^24.36.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
