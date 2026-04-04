@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.0 (2026-02-20)
+
+
+### Performance Improvements
+
+* download content using writableStream ([0b967a2](https://github.com/remarkablemark/puppeteer-download/commit/0b967a23577e7d34ec46750be7075230922bb509))
+
 ## 1.0.0 (2022-12-13)
 
 
